@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ 
+<configuration>
+    <typeAliases>
+        <typeAlias type="com.aws.codestar.projecttemplates.vo.VOUser" alias="userVO"/>
+        <typeAlias type="com.aws.codestar.projecttemplates.vo.VOUser" alias="userVO1"/>
+        <typeAlias type="com.aws.codestar.projecttemplates.vo.VOUser" alias="userVO2"/>
+         <typeAlias type="com.aws.codestar.projecttemplates.vo.VOUser" alias="userVO3"/>
+        <typeAlias type="com.aws.codestar.projecttemplates.vo.VOSensorData" alias="dataVO"/>
+        <typeAlias type="com.aws.codestar.projecttemplates.vo.VODevice" alias="deviceVO"/>
+        <typeAlias type="com.aws.codestar.projecttemplates.vo.VOCar" alias="carVO"/>
+    </typeAliases>
+</configuration>

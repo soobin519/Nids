@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aws.codestar.projecttemplates.MapperUser">
+    <resultMap type="userVO" id="userMap">
+        <id column="user_id" property="id"/>
+        <id column="user_pw" property="pw"/>
+        <id column="user_name" property="name"/>
+        <id column="user_gender" property="gender"/>
+        <id column="user_signup_date" property="signup"/>
+        <id column="user_auth" property="auth"/>
+        <id column="platform" property="platform"/>
+        <id column="user_bd" property="bd"/>
+        <id column="user_email" property="email"/>
+        <id column="user_phone" property="hp"/>
+    </resultMap>
+    <resultMap type="userVO1" id="userMap1">
+        <id column="user_id" property="id"/>
+        <id column="user_pw" property="pw"/>
+    </resultMap>
+    <resultMap type="userVO2" id="userMap2">
+        <id column="user_id" property="id"/>
+        <id column="user_pw" property="pw"/>
+        <id column="user_name" property="name"/>
+        <id column="user_gender" property="gender"/>
+        <id column="user_auth" property="auth"/>
+        <id column="platform" property="platform"/>
+        <id column="user_bd" property="bd"/>
+        <id column="user_email" property="email"/>
+        <id column="user_phone" property="hp"/>
+    </resultMap>
+    <resultMap type="userVO3" id="userMap3">
+        <id column="user_id" property="id"/>
+        <id column="user_name" property="name"/>
+        <id column="user_age" property="age"/>
+    </resultMap>
+    
+    <select id="selectUser" resultMap="userMap">
+        SELECT * FROM nids_test.user
+    </select>
+    
+    <select id="selectUserWithID" resultMap="userMap" parameterType="String">
+        SELECT * FROM nids_test.user WHERE user_id = #{value}
+    </select>
+    
+    <select id="selectUserWithAuth" resultMap="userMap" parameterType="String">
+        SELECT * FROM nids_test.user WHERE user_auth = #{value}
+    </select>
+    
+    <!-- 웹 -->
+    <insert id="insertUser" parameterType="userVO">
+        INSERT into nids_test.user (user_id, user_pw, user_name, user_age, user_gender, user_signup_date, user_phone, user_auth, platform, user_bd, user_email, user_phone) values (#{id},#{pw},#{name},#{age},#{gender},NOW(),#{phone}, #{auth}, #{platform}, #{bd}, #{email}, #{hp})
+    </insert>
+    
+       <!-- 모바일 -->
+    <insert id="registerUser" parameterType="userVO2">
+        INSERT into nids_test.user (user_id, user_pw, user_name, user_gender, user_signup_date, user_auth, platform, user_bd, user_email, user_phone) 
+        values (#{id},#{pw},#{name}, #{gender}, NOW(),#{auth}, #{platform}, #{bd}, #{email}, #{hp})
+    </insert>
+    
+    <!-- 모바일 비밀번호 수정-->
+    <update id="modifyPassword" parameterType="userVO1">
+        UPDATE nids_test.user SET user_pw = #{pw} WHERE user_id = #{id}
+    </update>
+    
+    <!-- 모바일 회원정보 수정-->
+     <update id="modifyUser" parameterType="userVO1">
+        UPDATE nids_test.user SET  user_name = #{name}, user_gender = #{gender}, user_phone = #{hp}, user_bd = #{bd}, user_age = #{age}, user_email = #{email} WHERE user_id = #{id}
+    </update>
+        
+</mapper>

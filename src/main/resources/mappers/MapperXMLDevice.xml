@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aws.codestar.projecttemplates.MapperDevice">
+    <resultMap type="deviceVO" id="deviceMap">
+        <id column="device_id" property="id"/>
+        <id column="device_type" property="type"/>
+        <id column="device_lat" property="lat"/>
+        <id column="device_lon" property="lon"/>
+        <id column="device_desc" property="desc"/>
+        <id column="user_id" property="userid"/>
+        <id column="device_baud" property="baud"/>
+    </resultMap>
+    
+    
+    <select id="selectDeviceWithID" resultMap="deviceMap" parameterType="String">
+        SELECT * FROM nids_test.devices WHERE user_id = #{value}
+    </select>
+    
+    <insert id="insertDevice" parameterType="deviceVO">
+        INSERT into nids_test.devices (device_id, device_type, device_lat, device_lon, user_id, device_desc, device_baud) values (#{id},#{type},#{lat},#{lon},#{userid},#{desc},#{baud})
+    </insert>
+    
+</mapper>

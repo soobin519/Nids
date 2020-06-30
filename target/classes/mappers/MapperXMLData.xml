@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aws.codestar.projecttemplates.MapperData">
+    <resultMap type="dataVO" id="dataMap">
+        <id column="data_idx" property="idx"/>
+        <id column="sensor_data" property="data"/>
+        <id column="input_date" property="date"/>
+        <id column="user_id" property="id"/>
+        <id column="data_amount" property="amount"/>
+        <id column="car_num" property="num"/>
+        <result property="date" column="input_date" jdbcType="TIMESTAMP" javaType="java.sql.Timestamp" />
+    </resultMap>
+    
+    <select id="selectLastData" resultMap="dataMap" parameterType="String">
+        SELECT * FROM nids_test.data WHERE user_id = #{value} ORDER BY input_date DESC limit 1
+    </select>
+    
+    <select id="selectDataWithHour" resultMap="dataMap" parameterType="map">
+        SELECT * FROM nids_test.data WHERE user_id = #{id} AND input_date > DATE_ADD(now(), INTERVAL #{hour} HOUR) AND input_date &lt; DATE_ADD(now(), INTERVAL 0 MINUTE)
+    </select>
+    
+    <select id="selectDataWithCarNum" resultMap="dataMap" parameterType="map">
+        SELECT * FROM nids_test.data WHERE car_num = #{num} AND input_date > DATE_ADD(now(), INTERVAL #{hour} HOUR) AND input_date &lt; DATE_ADD(now(), INTERVAL 0 MINUTE)
+    </select>
+    
+    <select id="selectThisWeek" resultMap="dataMap" parameterType="String">
+        SELECT * FROM nids_test.data WHERE DATE_FORMAT(input_date, '%Y-%U') = DATE_FORMAT(now(), '%Y-%U');
+    </select>
+    
+    <select id="selectLastWeek" resultMap="dataMap" parameterType="String">
+        SELECT * FROM nids_test.data WHERE DATE_FORMAT(input_date, '%Y-%U') = DATE_FORMAT(date_add(now(),interval -1 week), '%Y-%U');
+    </select>
+    
+    <select id="selectLocatWithID" resultMap="dataMap" parameterType="String">
+        SELECT lat, lon FROM nids_test.data WHERE user_id = #{value}
+    </select>
+    
+    <insert id="insertData" parameterType="dataVO">
+        INSERT into nids_test.data (sensor_data, input_date, user_id, data_amount, car_num, lat, lon) VALUES (#{data},NOW(),#{id},#{amount},#{num}, 37.441722, 127.171786)
+    </insert>
+    
+    <insert id="insertDataWithTime" parameterType="dataVO">
+        INSERT into nids_test.data (sensor_data, input_date, user_id, data_amount) VALUES (#{data}, #{date}, #{id}, #{amount})
+    </insert>
+</mapper>
